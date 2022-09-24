@@ -26,6 +26,7 @@ def get_weather_between(db: Session, start_date: str, end_date: str):
             func.date_trunc('day', models.Weather.timestamp).label('timestamp')) \
             .filter(models.Weather.timestamp >= start_date) \
             .filter(models.Weather.timestamp <= end_date) \
+            .order_by(func.date_trunc('day', models.Weather.timestamp))\
             .group_by(func.date_trunc('day', models.Weather.timestamp)).all()
 
     return query.all()
